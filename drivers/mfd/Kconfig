@@ -1,0 +1,46 @@
+#
+# Multifunction miscellaneous devices
+#
+
+if HAS_IOMEM
+menu "Multifunction device drivers"
+
+config MFD_CORE
+	tristate
+	select IRQ_DOMAIN
+	default n
+
+
+config MFD_RK808
+	tristate "Rockchip RK808 Power Management chip"
+	depends on I2C && OF
+	select MFD_CORE
+	select REGMAP_I2C
+	select REGMAP_IRQ
+	help
+	  If you say yes here you get support for the RK808
+	  Power Management chips.
+	  This driver provides common support for accessing the device
+	  through I2C interface. The device supports multiple sub-devices
+	  including interrupts, RTC, LDO & DCDC regulators, and onkey.
+
+
+config MFD_SYSCON
+	bool "System Controller Register R/W Based on Regmap"
+	select REGMAP_MMIO
+	help
+	  Select this option to enable accessing system control registers
+	  via regmap.
+
+
+endmenu
+
+
+config FUSB_30X
+	tristate "Fairchild fusb302 Support"
+	depends on I2C=y
+	help
+	  This option provides a driver for the Fairchild FUSB302.
+	  It support typec-pd functionality by controlled using I2C.
+
+endif
